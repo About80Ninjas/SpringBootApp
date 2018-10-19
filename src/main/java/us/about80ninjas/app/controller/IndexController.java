@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +35,7 @@ public class IndexController {
 	}
 	
 	@PostMapping(value="/job/SpringBootApp/build")
-	public String buildWebHook(@RequestBody String push) {
+	public ResponseEntity  buildWebHook(@RequestBody String push) {
 		logger.debug(push);
 		URL url;
 		try {
@@ -52,7 +54,7 @@ public class IndexController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "redirect:index";
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 }
