@@ -13,6 +13,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 
@@ -29,8 +32,9 @@ public class IndexController {
 		return "index";
 	}
 	
-	@GetMapping(value="/job/SpringBootApp/build")
-	public String buildWebHook() {
+	@PostMapping(value="/job/SpringBootApp/build")
+	public String buildWebHook(@RequestBody String push) {
+		logger.debug(push);
 		URL url;
 		try {
 			url = new URL("http://localhost:8080/job/SpringBootApp/build?TOKEN=mPj6hYZ5YeDy3C58AHzpz6nsr");
@@ -51,7 +55,4 @@ public class IndexController {
 		return "redirect:index";
 	}
 	
-	
-	
-
 }
