@@ -43,6 +43,7 @@ public class IndexController {
 			HttpURLConnection con;
 			con = (HttpURLConnection) url.openConnection();
 			con.setRequestMethod("GET");
+			con.connect();
 			con.disconnect();
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
