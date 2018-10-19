@@ -39,10 +39,10 @@ public class IndexController {
 		logger.debug(push);
 		URL url;
 		try {
-			url = new URL("http://localhost:8080/job/SpringBootApp/build?TOKEN=mPj6hYZ5YeDy3C58AHzpz6nsr");
+			url = new URL("http://192.168.1.200:8080/job/SpringBootApp/build?TOKEN=mPj6hYZ5YeDy3C58AHzpz6nsr");
 			HttpURLConnection con;
 			con = (HttpURLConnection) url.openConnection();
-			con.setRequestMethod("GET");
+			con.setRequestMethod("POST");
 			con.disconnect();
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
