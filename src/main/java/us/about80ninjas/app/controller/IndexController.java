@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.offbytwo.jenkins.JenkinsServer;
+import com.offbytwo.jenkins.model.QueueReference;
 
 
 
@@ -43,7 +44,9 @@ public class IndexController {
 		logger.debug(push);
 		try {
 			JenkinsServer jenkinsServer = new JenkinsServer(new URI("http://localhost:8080"),"Jordan","D@K0ta!?");
-			jenkinsServer.getJob("SpringBootApp").build();
+			QueueReference reference =  jenkinsServer.getJob("SpringBootApp").build();
+			logger.info("Triggering build");
+			logger.info(reference.getQueueItemUrlPart());
 			jenkinsServer.close();
 		} catch (URISyntaxException | IOException e) {
 			// TODO Auto-generated catch block
