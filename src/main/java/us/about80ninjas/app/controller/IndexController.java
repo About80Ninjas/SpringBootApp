@@ -30,6 +30,7 @@ public class IndexController {
 
 	//hi
 	Logger logger = LoggerFactory.getLogger(IndexController.class);
+	private static final String PASSWORD = System.getenv("password");
 
 	@GetMapping(value = "/")
 	public String index(HttpServletRequest request, Model model) {
@@ -54,7 +55,7 @@ public class IndexController {
 
 			try {
 				JenkinsServer jenkinsServer = new JenkinsServer(new URI("http://192.168.1.200:8080"), "Jordan",
-						"D@K0ta!?");
+						PASSWORD);
 				QueueReference reference = jenkinsServer.getJob("SpringBootApp").build();
 				logger.info("Triggering build");
 				logger.info(reference.getQueueItemUrlPart());
