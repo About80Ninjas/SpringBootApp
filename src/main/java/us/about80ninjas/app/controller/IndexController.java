@@ -47,7 +47,9 @@ public class IndexController {
 	
 	@PostMapping(value = "/job/SpringBootApp/build")
 	public ResponseEntity buildWebHook(@RequestBody WebHookPayload webHookPayload, HttpServletRequest request) {
-		if (webHookPayload.getSender().getLogin() == "About80Ninjas") {
+		String user = webHookPayload.getSender().getLogin();
+		logger.info(user + " requesting build");
+		if (user.equals("About80Ninjas")) {
 
 			try {
 				JenkinsServer jenkinsServer = new JenkinsServer(new URI("http://192.168.1.200:8080"), "Jordan",
