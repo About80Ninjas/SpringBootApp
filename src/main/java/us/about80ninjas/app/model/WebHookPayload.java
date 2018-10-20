@@ -1,8 +1,15 @@
 package us.about80ninjas.app.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class WebHookPayload {
 
-	Sender sender = new Sender();
+	@JsonDeserialize(as=Sender.class)
+	@JsonProperty("sender")
+	Sender sender;
 
 	public Sender getSender() {
 		return sender;
@@ -42,7 +49,9 @@ public class WebHookPayload {
 		return "WebHookPayload [sender=" + sender + "]";
 	}
 
+	@JsonIgnoreProperties(ignoreUnknown=true)
 	public class Sender {
+		@JsonProperty("login")
 		String login;
 
 		public String getLogin() {
