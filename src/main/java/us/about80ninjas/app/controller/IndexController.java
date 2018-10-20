@@ -63,6 +63,7 @@ public class IndexController {
 			} catch (URISyntaxException | IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
 			}
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
