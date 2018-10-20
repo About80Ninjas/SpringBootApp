@@ -45,7 +45,6 @@ public class IndexController {
 		try {
 			JenkinsServer jenkinsServer = new JenkinsServer(new URI("http://192.168.1.200:8080"),"Jordan","D@K0ta!?");
 			QueueReference reference =  jenkinsServer.getJob("SpringBootApp").build();
-			//hi
 			logger.info("Triggering build");
 			logger.info(reference.getQueueItemUrlPart());
 			jenkinsServer.close();
