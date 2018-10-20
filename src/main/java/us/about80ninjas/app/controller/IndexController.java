@@ -39,8 +39,9 @@ public class IndexController {
 	}
 
 	@GetMapping("/job/SpringBootApp/build")
-	public String lol() {
-		return "redirect:https://www.youtube.com/embed/DO7Y_Kw4LzU";
+	public String lol(HttpServletRequest request) {
+		logger.info(request.getRemoteAddr() + " got rek LOL");
+		return "redirect:https://www.youtube.com/embed/DO7Y_Kw4LzU?autoplay=1";
 	}
 	
 	
