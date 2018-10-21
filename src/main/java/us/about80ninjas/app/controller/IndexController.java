@@ -42,9 +42,9 @@ public class IndexController {
 	}
 	
 	@RequestMapping(value="/", method=RequestMethod.OPTIONS)
-	public String options(HttpServletRequest request) {
+	public ResponseEntity options(HttpServletRequest request) {
 		logger.info(request.getRemoteAddr() + " looing for options");
-		return "fuck off";
+		return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
 	}
 
 	@GetMapping("/job/SpringBootApp/build")
