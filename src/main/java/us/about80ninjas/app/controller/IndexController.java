@@ -19,6 +19,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.offbytwo.jenkins.JenkinsServer;
 import com.offbytwo.jenkins.model.QueueReference;
@@ -28,7 +30,7 @@ import us.about80ninjas.app.model.WebHookPayload;
 @Controller
 public class IndexController {
 
-	//hi
+	// hi
 	Logger logger = LoggerFactory.getLogger(IndexController.class);
 	private static final String PASSWORD = System.getenv("password");
 
@@ -39,14 +41,19 @@ public class IndexController {
 		model.addAttribute("ip", ip);
 		return "index";
 	}
+	
+	@RequestMapping(value="/", method=RequestMethod.OPTIONS)
+	public String options(HttpServletRequest request) {
+		logger.info(request.getRemoteAddr() + " looing for options");
+		return "fuck off";
+	}
 
 	@GetMapping("/job/SpringBootApp/build")
 	public String lol(HttpServletRequest request) {
 		logger.info(request.getRemoteAddr() + " got rek LOL");
 		return "redirect:https://www.youtube.com/embed/DO7Y_Kw4LzU?autoplay=1";
 	}
-	
-	
+
 	@PostMapping(value = "/job/SpringBootApp/build")
 	public ResponseEntity buildWebHook(@RequestBody WebHookPayload webHookPayload, HttpServletRequest request) {
 		String user = webHookPayload.getSender().getLogin();
