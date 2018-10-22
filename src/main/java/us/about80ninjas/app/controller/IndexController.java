@@ -32,9 +32,12 @@ import us.about80ninjas.app.service.AppService;
 @Controller
 public class IndexController {
 
-	// hi
 	Logger logger = LoggerFactory.getLogger(IndexController.class);
-	AppService appService = new AppService();
+	AppService appService;
+
+	public IndexController(AppService appService) {
+		this.appService = appService;
+	}
 
 	@GetMapping("/stats")
 	public String stats(Model model) {

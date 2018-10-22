@@ -3,10 +3,13 @@ package us.about80ninjas.app.service;
 import java.sql.Timestamp;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import us.about80ninjas.app.dto.VisiterDto;
 import us.about80ninjas.app.dto.VisiterDtoInMemImpl;
 import us.about80ninjas.app.model.Visiter;
 
+@Service
 public class AppService {
 	
 	VisiterDto visiterDto = new VisiterDtoInMemImpl();

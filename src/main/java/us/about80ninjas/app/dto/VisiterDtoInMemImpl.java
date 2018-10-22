@@ -6,8 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Repository;
+
 import us.about80ninjas.app.model.Visiter;
 
+@Repository
 public class VisiterDtoInMemImpl implements VisiterDto {
 
 	Map<Integer, Visiter> visiterMap = new HashMap<>();
