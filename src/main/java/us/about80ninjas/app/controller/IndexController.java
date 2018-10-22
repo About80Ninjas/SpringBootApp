@@ -1,12 +1,5 @@
 package us.about80ninjas.app.controller;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.offbytwo.jenkins.JenkinsServer;
-import com.offbytwo.jenkins.model.QueueReference;
 
 import us.about80ninjas.app.model.Visiter;
 import us.about80ninjas.app.model.WebHookPayload;
@@ -72,26 +63,14 @@ public class IndexController {
 
 	@PostMapping(value = "/job/SpringBootApp/build")
 	public ResponseEntity buildWebHook(@RequestBody WebHookPayload webHookPayload, HttpServletRequest request) {
-		String user = webHookPayload.getSender().getLogin();
-		logger.info(user + " requesting build");
-		if (user.equals("About80Ninjas")) {
-
-			try {
-				JenkinsServer jenkinsServer = new JenkinsServer(new URI("http://192.168.1.200:8080"), "bot",
-						"VTaPug5ghyrDGozYq5fLlT1T7");
-				QueueReference reference = jenkinsServer.getJob("SpringBootApp").build();
-				logger.info("Triggering build");
-				logger.info(reference.getQueueItemUrlPart());
-				jenkinsServer.close();
-			} catch (URISyntaxException | IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
-			}
-			return new ResponseEntity<>(HttpStatus.OK);
+		appService.addVisiter(visiterMapper(request));
+		if (!(appService.isAuthorised(webHookPayload, request))) {
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
-		logger.warn(request.getRemoteAddr() + " attempted unauthorized deploy");
-		return new ResponseEntity<>(HttpStatus.UNAVAILABLE_FOR_LEGAL_REASONS);
+		if(!(appService.requestBuild())) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	private Visiter visiterMapper(HttpServletRequest request) {
