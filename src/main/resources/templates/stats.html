@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<div>
+		<h3>Clients</h3>
+		<table>
+			<tr>
+				<th>HostName</th>
+				<th>Ip</th>
+				<th>Timestamp</th>
+			</tr>
+			<th:block th:each="visitor : ${visitors}">
+				<tr>
+					<td th:text="${visitor.name}"></td>
+					<td th:text="${visitor.ip}"></td>
+					<td th:text="${visitor.timestamp}"></td>
+				</tr>
+			</th:block>
+		</table>
+	</div>
+</body>
+</html>

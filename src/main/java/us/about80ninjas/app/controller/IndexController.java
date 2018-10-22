@@ -25,31 +25,45 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.offbytwo.jenkins.JenkinsServer;
 import com.offbytwo.jenkins.model.QueueReference;
 
+import us.about80ninjas.app.model.Visiter;
 import us.about80ninjas.app.model.WebHookPayload;
+import us.about80ninjas.app.service.AppService;
 
 @Controller
 public class IndexController {
 
 	// hi
 	Logger logger = LoggerFactory.getLogger(IndexController.class);
+	AppService appService = new AppService();
+
+	@GetMapping("/stats")
+	public String stats(Model model) {
+		model.addAttribute("visitors", appService.getAllVisiter());
+		return "stats";
+	}
 
 	@GetMapping(value = "/")
 	public String index(HttpServletRequest request, Model model) {
-		String ip = request.getRemoteAddr();
-		logger.info("Index hit : " + ip);
-		model.addAttribute("ip", ip);
+		Visiter visiter = visiterMapper(request);
+		appService.addVisiter(visiter);
+		logger.info("Index hit : " + visiter.getIp());
+		model.addAttribute("ip", visiter.getIp());
 		return "index";
 	}
-	
-	@RequestMapping(value="/", method=RequestMethod.OPTIONS)
+
+	@RequestMapping(value = "/", method = RequestMethod.OPTIONS)
 	public ResponseEntity options(HttpServletRequest request) {
-		logger.info(request.getRemoteAddr() + " looing for options");
+		Visiter visiter = visiterMapper(request);
+		appService.addVisiter(visiter);
+		logger.info(visiter.getIp() + " looing for options");
 		return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
 	}
 
 	@GetMapping("/job/SpringBootApp/build")
 	public String lol(HttpServletRequest request) {
-		logger.info(request.getRemoteAddr() + " got rek LOL");
+		Visiter visiter = visiterMapper(request);
+		appService.addVisiter(visiter);
+		logger.info(visiter.getIp() + " got rek LOL");
 		return "redirect:https://www.youtube.com/embed/DO7Y_Kw4LzU?autoplay=1";
 	}
 
@@ -75,6 +89,13 @@ public class IndexController {
 		}
 		logger.warn(request.getRemoteAddr() + " attempted unauthorized deploy");
 		return new ResponseEntity<>(HttpStatus.UNAVAILABLE_FOR_LEGAL_REASONS);
+	}
+
+	private Visiter visiterMapper(HttpServletRequest request) {
+		Visiter visiter = new Visiter();
+		visiter.setName(request.getRemoteHost());
+		visiter.setIp(request.getRemoteAddr());
+		return visiter;
 	}
 
 }
