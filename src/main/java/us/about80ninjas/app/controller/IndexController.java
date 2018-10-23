@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-
+import us.about80ninjas.app.model.VisiterMapper;
 import us.about80ninjas.app.model.Visiter;
 import us.about80ninjas.app.model.WebHookPayload;
 import us.about80ninjas.app.service.AppService;
@@ -38,7 +38,7 @@ public class IndexController {
 
 	@GetMapping(value = "/")
 	public String index(HttpServletRequest request, Model model) {
-		Visiter visiter = visiterMapper(request);
+		Visiter visiter = VisiterMapper.getIpInfo(request.getRemoteAddr());
 		appService.addVisiter(visiter);
 		logger.info("Index hit : " + visiter.getIp());
 		model.addAttribute("ip", visiter.getIp());
@@ -47,7 +47,7 @@ public class IndexController {
 
 	@RequestMapping(value = "/", method = RequestMethod.OPTIONS)
 	public ResponseEntity options(HttpServletRequest request) {
-		Visiter visiter = visiterMapper(request);
+		Visiter visiter = VisiterMapper.getIpInfo(request.getRemoteAddr());
 		appService.addVisiter(visiter);
 		logger.info(visiter.getIp() + " looing for options");
 		return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
@@ -55,7 +55,7 @@ public class IndexController {
 
 	@GetMapping("/job/SpringBootApp/build")
 	public String lol(HttpServletRequest request) {
-		Visiter visiter = visiterMapper(request);
+		Visiter visiter = VisiterMapper.getIpInfo(request.getRemoteAddr());
 		appService.addVisiter(visiter);
 		logger.info(visiter.getIp() + " got rek LOL");
 		return "redirect:https://www.youtube.com/embed/DO7Y_Kw4LzU?autoplay=1";
@@ -63,7 +63,7 @@ public class IndexController {
 
 	@PostMapping(value = "/job/SpringBootApp/build")
 	public ResponseEntity buildWebHook(@RequestBody WebHookPayload webHookPayload, HttpServletRequest request) {
-		appService.addVisiter(visiterMapper(request));
+		appService.addVisiter(VisiterMapper.getIpInfo(request.getRemoteAddr()));
 		if (!(appService.isAuthorised(webHookPayload, request))) {
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
@@ -73,11 +73,5 @@ public class IndexController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	private Visiter visiterMapper(HttpServletRequest request) {
-		Visiter visiter = new Visiter();
-		visiter.setName(request.getRemoteHost());
-		visiter.setIp(request.getRemoteAddr());
-		return visiter;
-	}
 
 }

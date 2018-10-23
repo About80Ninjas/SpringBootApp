@@ -11,13 +11,24 @@
 			<tr>
 				<th>HostName</th>
 				<th>Ip</th>
+				<th>City</th>
+				<th>Region</th>
+				<th>Country</th>
+				<th>Loc</th>
+				<th>Zip</th>
+				<th>Org</th>
 				<th>Timestamp</th>
 			</tr>
 			<th:block th:each="visitor : ${visitors}">
 				<tr>
-					<td th:text="${visitor.name}"></td>
+					<td th:text="${visitor.hostName}"></td>
 					<td th:text="${visitor.ip}"></td>
-					<td th:text="${visitor.timestamp}"></td>
+					<td th:text="${visitor.city}"></td>
+					<td th:text="${visitor.region}"></td>
+					<td th:text="${visitor.country}"></td>
+					<td th:text="${visitor.loc}"></td>
+					<td th:text="${visitor.zip}"></td>
+					<td th:text="${visitor.org}"></td>
 				</tr>
 			</th:block>
 		</table>
