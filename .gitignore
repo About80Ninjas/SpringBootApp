@@ -23,6 +23,4 @@
 /dist/
 /nbdist/
 /.nb-gradle/
-/us.log
-/us.log.2018-10-20.0.gz
-/us.log.2018-10-21.0.gz
+/us.log*
