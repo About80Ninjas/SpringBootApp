@@ -77,6 +77,10 @@ public class IndexController {
 	public String valadation() {
 		return "4990EB950093B37882A458E1428BE026.txt";
 	}
+	@GetMapping("/.well-known/pki-validation/D49810EB4FA3D6698CA38579B3E32FCB.txt")
+	public String valadation2() {
+		return "D49810EB4FA3D6698CA38579B3E32FCB.txt";
+	}
 
 
 }
