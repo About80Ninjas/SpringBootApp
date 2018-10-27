@@ -7,10 +7,10 @@
 	<groupId>us.about80ninjas</groupId>
 	<artifactId>app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
-	<name>app</name>
-	<description></description>
+	<name>Rasberry</name>
+	<description>Spring Boot App runngin on a rasberrypi</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -51,7 +51,11 @@
 			<artifactId>jenkins-client</artifactId>
 			<version>0.3.8</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
