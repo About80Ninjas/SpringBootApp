@@ -72,6 +72,11 @@ public class IndexController {
 		}
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	
+	@GetMapping("/.well-known/pki-validation/4990EB950093B37882A458E1428BE026.txt")
+	public String valadation() {
+		return "4990EB950093B37882A458E1428BE026.txt";
+	}
 
 
 }
